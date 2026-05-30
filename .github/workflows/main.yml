@@ -9,12 +9,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Package App
+    - name: Find and Package App
+      shell: pwsh
       run: |
-        & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\makeappx.exe" pack /d . /p MetroChrome_Cloud.appx /o
+        $makeappx = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Filter makeappx.exe -Recurse | 
+                    Where-Object { $_.FullName -match 'x64' } | 
+                    Select-Object -First 1 -ExpandProperty FullName
+        
+        if (-not $makeappx) {
+            Write-Error "Could not find makeappx.exe in Windows Kits folder!"
+            exit 1
+        }
+        
+        Write-Host "Found compiler at: $makeappx"
+        & $makeappx pack /d . /p MetroChrome_Cloud.appx /o
 
     - name: Upload Appx Artifact
       uses: actions/upload-artifact@v4
