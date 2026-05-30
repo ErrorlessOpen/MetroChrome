@@ -1,0 +1,104 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 body \{\
+    margin: 0;\
+    padding: 0;\
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\
+    background-color: #1f1f1f;\
+    color: #ffffff;\
+    overflow: hidden;\
+    height: 100vh;\
+    display: flex;\
+    flex-direction: column;\
+\}\
+\
+/* Tab Bar */\
+#tab-bar \{\
+    display: flex;\
+    background-color: #111111;\
+    padding: 5px 5px 0 5px;\
+    align-items: center;\
+\}\
+#tabs-container \{\
+    display: flex;\
+    overflow-x: auto;\
+\}\
+.tab \{\
+    padding: 8px 15px;\
+    background-color: #2d2d2d;\
+    margin-right: 2px;\
+    border-top: 2px solid transparent;\
+    font-size: 12px;\
+    max-width: 120px;\
+    white-space: nowrap;\
+    overflow: hidden;\
+    text-overflow: ellipsis;\
+    cursor: pointer;\
+\}\
+.tab.active \{\
+    background-color: #1f1f1f;\
+    border-top: 2px solid #0078d7; /* Windows Blue Accent */\
+\}\
+.tab.incognito-tab \{\
+    border-top: 2px solid #8a2be2; /* Incognito Purple */\
+\}\
+#new-tab-btn \{\
+    background: none;\
+    border: none;\
+    color: white;\
+    font-size: 16px;\
+    padding: 5px 10px;\
+\}\
+\
+/* Toolbar */\
+#toolbar \{\
+    display: flex;\
+    background-color: #1f1f1f;\
+    padding: 5px;\
+    align-items: center;\
+    border-bottom: 1px solid #2d2d2d;\
+\}\
+.nav-btn \{\
+    font-family: 'Segoe MDL2 Assets';\
+    background: none;\
+    border: none;\
+    color: white;\
+    font-size: 16px;\
+    padding: 8px;\
+    width: 36px;\
+    height: 36px;\
+\}\
+#omnibox \{\
+    flex-grow: 1;\
+    background-color: #2d2d2d;\
+    border: 1px solid #3d3d3d;\
+    color: white;\
+    padding: 6px 12px;\
+    margin: 0 5px;\
+    font-size: 14px;\
+\}\
+#omnibox:focus \{\
+    border-color: #0078d7;\
+    outline: none;\
+\}\
+\
+/* Webview Container */\
+#webview-container \{\
+    flex-grow: 1;\
+    position: relative;\
+\}\
+x-ms-webview \{\
+    width: 100%;\
+    height: 100%;\
+    position: absolute;\
+    top: 0;\
+    left: 0;\
+    border: none;\
+    background: white;\
+\}\
+.hidden \{ display: none !important; \}}
