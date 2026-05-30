@@ -15,7 +15,7 @@
   <Properties>
     <DisplayName>MetroChrome</DisplayName>
     <PublisherDisplayName>MetroChrome</PublisherDisplayName>
-    <Logo>logo.png</Logo>
+    <Logo>WebAssets\logo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -27,9 +27,9 @@
       <uap:VisualElements DisplayName="MetroChrome" 
                           Description="MetroChrome Browser" 
                           BackgroundColor="#111111" 
-                          Square150x150Logo="logo.png" 
-                          Square44x44Logo="logo.png">
-        <uap:SplashScreen Image="logo.png" />
+                          Square150x150Logo="WebAssets\logo.png" 
+                          Square44x44Logo="WebAssets\logo.png">
+        <uap:SplashScreen Image="WebAssets\logo.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
