@@ -1,31 +1,33 @@
-name: Build APPX
+name: Build Native UWP APPX
 
 on: [push, workflow_dispatch]
 
 jobs:
   build:
     runs-on: windows-latest
+    
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Find and Package App
-      shell: pwsh
-      run: |
-        $makeappx = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Filter makeappx.exe -Recurse | 
-                    Where-Object { $_.FullName -match 'x64' } | 
-                    Select-Object -First 1 -ExpandProperty FullName
-        
-        if (-not $makeappx) {
-            Write-Error "Could not find makeappx.exe in Windows Kits folder!"
-            exit 1
-        }
-        
-        Write-Host "Found compiler at: $makeappx"
-        & $makeappx pack /d . /p MetroChrome_Cloud.appx /o
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
 
-    - name: Upload Appx Artifact
+    - name: Restore NuGet Packages
+      run: nuget restore MetroChrome/MetroChrome.sln
+
+    - name: Build and Package for ARM (Windows 10 Mobile)
+      run: |
+        msbuild MetroChrome/MetroChrome.sln `
+          /p:Configuration=Release `
+          /p:Platform=ARM `
+          /p:AppxBundle=Always `
+          /p:AppxBundlePlatforms="ARM" `
+          /p:BuildAppxUploadPackageForStore=false `
+          /p:UapAppxPackageBuildMode=SideloadOnly
+
+    - name: Upload Finished APPX Bundle
       uses: actions/upload-artifact@v4
       with:
-        name: MetroChrome-Appx-Package
-        path: MetroChrome_Cloud.appx
+        name: MetroChrome-Native-ARM-Package
+        path: MetroChrome/MetroChrome/AppPackages/
