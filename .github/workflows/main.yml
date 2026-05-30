@@ -10,21 +10,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Build and Package Project for ARM
+    - name: Discover and Run MakeAppx
       run: |
-        msbuild MetroChrome/MetroChrome/MetroChrome.csproj `
-          /p:Configuration=Release `
-          /p:Platform=ARM `
-          /p:AppxBundle=Always `
-          /p:AppxBundlePlatforms="ARM" `
-          /p:BuildAppxUploadPackageForStore=false `
-          /p:UapAppxPackageBuildMode=SideloadOnly
-
+        $makeappx = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Filter makeappx.exe -Recurse | Select-Object -First 1
+        & $makeappx.FullName pack /d MetroChrome/MetroChrome /p MetroChrome_ARM.appx /o
+        
     - name: Upload Finished APPX Bundle
       uses: actions/upload-artifact@v4
       with:
         name: MetroChrome-Native-ARM-Package
-        path: MetroChrome/MetroChrome/AppPackages/
+        path: MetroChrome_ARM.appx
