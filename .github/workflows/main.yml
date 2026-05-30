@@ -1,4 +1,4 @@
-nname: Build Native UWP APPX
+name: Build Native UWP APPX
 
 on: [push, workflow_dispatch]
 
