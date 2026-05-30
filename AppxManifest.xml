@@ -14,7 +14,7 @@
   <Properties>
     <DisplayName>MetroChrome</DisplayName>
     <PublisherDisplayName>ErrorlessOpen</PublisherDisplayName>
-    <Logo>index.html</Logo>
+    <Logo>logo.png</Logo>
   </Properties>
   
   <Dependencies>
@@ -30,9 +30,9 @@
       <uap:VisualElements DisplayName="MetroChrome" 
                           Description="MetroChrome Browser" 
                           BackgroundColor="#0078D7" 
-                          Square150x150Logo="index.html" 
-                          Square44x44Logo="index.html">
-        <uap:SplashScreen Image="index.html" />
+                          Square150x150Logo="logo.png" 
+                          Square44x44Logo="logo.png">
+        <uap:SplashScreen Image="logo.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
