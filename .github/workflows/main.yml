@@ -1,4 +1,4 @@
-name: Build Native UWP APPX
+nname: Build Native UWP APPX
 
 on: [push, workflow_dispatch]
 
@@ -13,12 +13,9 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Restore NuGet Packages
-      run: nuget restore MetroChrome/MetroChrome.sln
-
-    - name: Build and Package for ARM (Windows 10 Mobile)
+    - name: Build and Package Project for ARM
       run: |
-        msbuild MetroChrome/MetroChrome.sln `
+        msbuild MetroChrome/MetroChrome.csproj `
           /p:Configuration=Release `
           /p:Platform=ARM `
           /p:AppxBundle=Always `
@@ -30,4 +27,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MetroChrome-Native-ARM-Package
-        path: MetroChrome/MetroChrome/AppPackages/
+        path: MetroChrome/AppPackages/
