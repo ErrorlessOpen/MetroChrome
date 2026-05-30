@@ -10,13 +10,30 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Discover and Run MakeAppx
+    - name: Find Manifest and Build APPX
+      shell: powershell
       run: |
+        # 1. Automatically find where the manifest file is located
+        $manifestFile = Get-ChildItem -Recurse -Filter *appxmanifest* | Select-Object -First 1
+        if (-not $manifestFile) { throw "Could not find any appxmanifest file in the repository!" }
+        
+        $projectFolder = $manifestFile.Directory.FullName
+        Write-Host "Found project folder at: $projectFolder"
+
+        # 2. Locate Microsoft's packaging tool
         $makeappx = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Filter makeappx.exe -Recurse | Select-Object -First 1
-        & $makeappx.FullName pack /d MetroChrome/MetroChrome /p MetroChrome_ARM.appx /o
+        if (-not $makeappx) { throw "makeappx.exe tool not found on the runner!" }
+
+        # 3. Ensure the manifest file is named exactly what the packager expects
+        if ($manifestFile.Name -ne "AppxManifest.xml") {
+            Move-Item -Path $manifestFile.FullName -Destination "$projectFolder\AppxManifest.xml" -Force
+        }
+
+        # 4. Pack the folder directly into an ARM deployable file
+        & $makeappx.FullName pack /d $projectFolder /p "$env:USERPROFILE\Desktop\MetroChrome_ARM.appx" /o
         
     - name: Upload Finished APPX Bundle
       uses: actions/upload-artifact@v4
       with:
         name: MetroChrome-Native-ARM-Package
-        path: MetroChrome_ARM.appx
+        path: ~/Desktop/MetroChrome_ARM.appx
